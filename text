@@ -1,0 +1,18 @@
+def chatbot(user_input):
+    processed = preprocess(user_input)
+    vec = vectorizer.transform([processed])
+    intent = model.predict(vec)[0]
+
+    entities = extract_entities_from_text(user_input)
+
+    if intent == "find_person":
+        return "👤 Persons: " + ", ".join(entities["Person"]) if entities["Person"] else "No person found"
+    
+    elif intent == "find_location":
+        return "📍 Locations: " + ", ".join(entities["Location"]) if entities["Location"] else "No location found"
+    
+    elif intent == "find_organization":
+        return "🏢 Organizations: " + ", ".join(entities["Organization"]) if entities["Organization"] else "No organization found"
+    
+    else:
+        return "Intent not recognized"
